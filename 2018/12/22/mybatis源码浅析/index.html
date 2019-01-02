@@ -4,24 +4,24 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="UTF-8">
   
-    <title>写在前面的话 | Stay Hungry, Stay Foolish</title>
+    <title>mybatis源码浅析 | Stay Hungry, Stay Foolish</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="人工不智能">
     
 
     
-    <meta name="description" content="写到这篇博客的时候，我已经毕业一年了，浑浑噩噩了一年，虽然跟随公司的前辈们学习了很多东西，但是真正沉下心来做的太少，浪费的时间太多。想来在学校的时候太贪玩，走到社会之后还是如此，并没有一个码农该有的觉悟，有目标确远远不够努力。偶然看到一大佬三次面试阿里都没有成功，所记录下的面试内容有些甚至完全不懂，特此决定从博客开始，一点一滴把所有新学习的东西记录下来。 列举一下我接下来要学习的东西，计划把这些点">
+    <meta name="description" content="一个弱鸡码农的成长之路">
 <meta property="og:type" content="article">
-<meta property="og:title" content="写在前面的话">
-<meta property="og:url" content="http://yoursite.com/2018/12/13/写在前面的话/index.html">
+<meta property="og:title" content="mybatis源码浅析">
+<meta property="og:url" content="http://yoursite.com/2018/12/22/mybatis源码浅析/index.html">
 <meta property="og:site_name" content="Stay Hungry, Stay Foolish">
-<meta property="og:description" content="写到这篇博客的时候，我已经毕业一年了，浑浑噩噩了一年，虽然跟随公司的前辈们学习了很多东西，但是真正沉下心来做的太少，浪费的时间太多。想来在学校的时候太贪玩，走到社会之后还是如此，并没有一个码农该有的觉悟，有目标确远远不够努力。偶然看到一大佬三次面试阿里都没有成功，所记录下的面试内容有些甚至完全不懂，特此决定从博客开始，一点一滴把所有新学习的东西记录下来。 列举一下我接下来要学习的东西，计划把这些点">
+<meta property="og:description" content="一个弱鸡码农的成长之路">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-19T13:23:06.503Z">
+<meta property="og:updated_time" content="2018-12-22T09:59:37.155Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="写在前面的话">
-<meta name="twitter:description" content="写到这篇博客的时候，我已经毕业一年了，浑浑噩噩了一年，虽然跟随公司的前辈们学习了很多东西，但是真正沉下心来做的太少，浪费的时间太多。想来在学校的时候太贪玩，走到社会之后还是如此，并没有一个码农该有的觉悟，有目标确远远不够努力。偶然看到一大佬三次面试阿里都没有成功，所记录下的面试内容有些甚至完全不懂，特此决定从博客开始，一点一滴把所有新学习的东西记录下来。 列举一下我接下来要学习的东西，计划把这些点">
+<meta name="twitter:title" content="mybatis源码浅析">
+<meta name="twitter:description" content="一个弱鸡码农的成长之路">
 
     
     <link rel="alternative" href="/atom.xml" title="Stay Hungry, Stay Foolish" type="application/atom+xml">
@@ -79,14 +79,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2018/12/13/写在前面的话/" title="写在前面的话" itemprop="url">写在前面的话</a>
+      <a href="/2018/12/22/mybatis源码浅析/" title="mybatis源码浅析" itemprop="url">mybatis源码浅析</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="人工不智能" target="_blank" itemprop="author">人工不智能</a>
 		
   </p><p class="article-time">
-    <time datetime="2018-12-13T07:26:21.218Z" itemprop="datePublished"> 发表于 2018-12-13</time>
+    <time datetime="2018-12-22T09:59:37.000Z" itemprop="datePublished"> 发表于 2018-12-22</time>
     
   </p>
 </header>
@@ -99,28 +99,7 @@
 		
 		</div>
 		
-		<p>写到这篇博客的时候，我已经毕业一年了，浑浑噩噩了一年，虽然跟随公司的前辈们学习了很多东西，但是真正沉下心来做的太少，浪费的时间太多。想来在学校的时候太贪玩，走到社会之后还是如此，并没有一个码农该有的觉悟，有目标确远远不够努力。偶然看到一大佬三次面试阿里都没有成功，所记录下的面试内容有些甚至完全不懂，特此决定从博客开始，一点一滴把所有新学习的东西记录下来。</p>
-<p>列举一下我接下来要学习的东西，计划把这些点一一记录下来</p>
-<ul>
-<li>markdown基本语法</li>
-<li>rest风格接口最佳实践</li>
-<li>使用idea搭建springboot项目</li>
-<li>java动态代理机制（jdk，CGLIB，Javassist，ASM）</li>
-<li>spring源码的学习理解</li>
-<li>aop与动态代理机制</li>
-<li>zookeeper原理探究</li>
-<li>dubbo原理探究</li>
-<li>netty入门</li>
-<li>springboot原理探究</li>
-<li>druid</li>
-<li>使用sharding-jdbc+mybatis进行分库分表</li>
-<li>mybatis索引优化</li>
-<li>数据库大表优化</li>
-<li>LRU缓存</li>
-<li>Guava Cache实现原理</li>
-<li>在网页上点击一个按钮到服务器的整个流程</li>
-</ul>
-  
+		  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -132,7 +111,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2018/12/13/写在前面的话/" data-title="写在前面的话 | Stay Hungry, Stay Foolish" data-tsina="" class="share clearfix">
+	  <div data-url="http://yoursite.com/2018/12/22/mybatis源码浅析/" data-title="mybatis源码浅析 | Stay Hungry, Stay Foolish" data-tsina="" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -146,13 +125,21 @@
 <nav class="article-nav clearfix">
  
  <div class="prev">
- <a href="/2018/12/16/markdown基本语法/" title="Markdown基本语法">
+ <a href="/2018/12/22/收藏/" title="收藏">
   <strong>上一篇：</strong><br>
   <span>
-  Markdown基本语法</span>
+  收藏</span>
 </a>
 </div>
 
+
+<div class="next">
+<a href="/2018/12/19/java动态代理机制/" title="java动态代理机制">
+ <strong>下一篇：</strong><br> 
+ <span>java动态代理机制
+</span>
+</a>
+</div>
 
 </nav>
 

@@ -11,19 +11,19 @@
     
 
     
-    <meta name="description" content="Restful风格最佳实践REST来历Roy Thomas Fielding在他2000年的博士论文中提出了REST的概念，Representational State Transfer这个词，翻译成中文大意为表现层状态传输。由于他是HTTP协议（1.0版和1.1版）的主要设计者、Apache服务器软件的作者之一、Apache基金会的第一任主席，所以REST原则迅速流行起来。当一个软件架构符合RE">
+    <meta name="description" content="Restful风格最佳实践 REST来历Roy Thomas Fielding在他2000年的博士论文中提出了REST的概念，Representational State Transfer这个词，翻译成中文大意为表现层状态传输。由于他是HTTP协议（1.0版和1.1版）的主要设计者、Apache服务器软件的作者之一、Apache基金会的第一任主席，所以REST原则迅速流行起来。当一个软件架构符合R">
 <meta property="og:type" content="article">
 <meta property="og:title" content="restful风格最佳实践">
 <meta property="og:url" content="http://yoursite.com/2018/12/19/restful风格最佳实践/index.html">
 <meta property="og:site_name" content="Stay Hungry, Stay Foolish">
-<meta property="og:description" content="Restful风格最佳实践REST来历Roy Thomas Fielding在他2000年的博士论文中提出了REST的概念，Representational State Transfer这个词，翻译成中文大意为表现层状态传输。由于他是HTTP协议（1.0版和1.1版）的主要设计者、Apache服务器软件的作者之一、Apache基金会的第一任主席，所以REST原则迅速流行起来。当一个软件架构符合RE">
+<meta property="og:description" content="Restful风格最佳实践 REST来历Roy Thomas Fielding在他2000年的博士论文中提出了REST的概念，Representational State Transfer这个词，翻译成中文大意为表现层状态传输。由于他是HTTP协议（1.0版和1.1版）的主要设计者、Apache服务器软件的作者之一、Apache基金会的第一任主席，所以REST原则迅速流行起来。当一个软件架构符合R">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2018/12/19/restful风格最佳实践/restful1.png">
 <meta property="og:image" content="http://yoursite.com/2018/12/19/restful风格最佳实践/restful2.png">
-<meta property="og:updated_time" content="2018-12-19T14:39:41.480Z">
+<meta property="og:updated_time" content="2018-12-29T07:23:47.317Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="restful风格最佳实践">
-<meta name="twitter:description" content="Restful风格最佳实践REST来历Roy Thomas Fielding在他2000年的博士论文中提出了REST的概念，Representational State Transfer这个词，翻译成中文大意为表现层状态传输。由于他是HTTP协议（1.0版和1.1版）的主要设计者、Apache服务器软件的作者之一、Apache基金会的第一任主席，所以REST原则迅速流行起来。当一个软件架构符合RE">
+<meta name="twitter:description" content="Restful风格最佳实践 REST来历Roy Thomas Fielding在他2000年的博士论文中提出了REST的概念，Representational State Transfer这个词，翻译成中文大意为表现层状态传输。由于他是HTTP协议（1.0版和1.1版）的主要设计者、Apache服务器软件的作者之一、Apache基金会的第一任主席，所以REST原则迅速流行起来。当一个软件架构符合R">
 <meta name="twitter:image" content="http://yoursite.com/2018/12/19/restful风格最佳实践/restful1.png">
 
     
@@ -102,63 +102,116 @@
 		
 		</div>
 		
-		<h3 id="Restful风格最佳实践"><a href="#Restful风格最佳实践" class="headerlink" title="Restful风格最佳实践"></a>Restful风格最佳实践<br></h3><h4 id="REST来历"><a href="#REST来历" class="headerlink" title="REST来历"></a>REST来历<br></h4><p><strong>Roy Thomas Fielding</strong>在他2000年的博士论文中提出了<strong>REST</strong>的概念，<strong>Representational State Transfer</strong>这个词，翻译成中文大意为表现层状态传输。由于他是HTTP协议（1.0版和1.1版）的主要设计者、Apache服务器软件的作者之一、Apache基金会的第一任主席，所以REST原则迅速流行起来。当一个软件架构符合REST原则，我们称之为<strong>RESTful架构</strong>。    </p>
-<h4 id="为什么要使用REST？"><a href="#为什么要使用REST？" class="headerlink" title="为什么要使用REST？"></a>为什么要使用REST？<br></h4><p>众所周知，在桌面时代，网页是前后端融合在一起的，但是随着移动互联网的发展，各种各样类型的client层出不穷，RESTful可以通过一套统一的接口为WEB、IOS、Android提供服务。而且对于一些平台来说，如微信公众号、微博开放平台、Facebook platform等，它们不需要显式的前端，只需要一套提供服务的接口，这样来说RESTful是最好的选择。<br>一张图来表现RESTful：<br> <img src="/2018/12/19/restful风格最佳实践/restful1.png" alt="mage-20180423170415"> <br></p>
-<h4 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念<br></h4><p>在了解REST之前我们先来了解几个概念：<br><strong>幂等性</strong>：在HTTP/1.1规范中幂等性的定义是如果方法调用一次和多次产生额外的效果是相同的，它就具有幂等性。例如，在HTTP中使用GET方法通常用于从服务器获取资源，无论调用多少次产生的额外效果都是从服务器获取资源，所以GET具有幂等性；而POST方法通常用于提交数据在服务器上创建一个资源，由于最终创建的结果每次都是不同的，所以POST不具有幂等性；但是PUT方法却是幂等的，因为每次调用产生的效果都是对资源进行更新。<br><br><strong>安全性</strong>：安全方法是指不修改资源的 HTTP 方法。更准确来说是：不改变资源的表示形式。对于安全方法，它仍然可能改变服务器上的内容或资源，但这必须不导致不同的表现形式。<br><br>以下是http常用方法的幂等性和安全性： <br><img src="/2018/12/19/restful风格最佳实践/restful2.png" width="400" height="420" alt="mage-20180502134810"><br><br><br>在啰嗦了这么多之后终于可以进入主题了，接下来让我们真正地走近REST。 <br></p>
-<h4 id="什么是REST"><a href="#什么是REST" class="headerlink" title="什么是REST?"></a>什么是REST?<br></h4><p>REST全称Representational State Transfer，即表现层状态转移，乍看之下不明觉厉，之所以晦涩难懂是因为去掉了主语，应该是Resource Representational State Transfer，通俗来讲就是：资源在网络中以某种表现形式进行状态转移。<br>拆开理解：<br><strong>Resource</strong>：资源，即数据（前面说过网络的核心）。比如 newsfeed，friends等；Representational：某种表现形式，比如用JSON，XML，JPEG等；<br><strong>State Transfer</strong>：状态变化。通过HTTP动词实现。<br>  </p>
-<h4 id="RESTful-API设计规则"><a href="#RESTful-API设计规则" class="headerlink" title="RESTful API设计规则"></a>RESTful API设计规则<br></h4><ol>
-<li>应将api部署在专用域名下</li>
-<li>URL区分大小写，/Posts和/posts是两个不同的URL，指向不同的资源</li>
-<li>使用连接符“-”，而不使用下划线“_”，避免和浏览器中超链接（文字并附带下划线）重合，影响可读性</li>
-<li>参数列表要encode</li>
-<li>URL中不应该出现动词，动词应该用HTTP方法表示</li>
-<li>URL中名字表示资源集合，建议使用复数形式</li>
-<li>虽然在URL中使用“/”表达层级，但是为了避免层级过深，适当用参数表示，例如：<a href="#">GET /customers/{customerId}/cars?offset=10&amp;limit=5</a>  </li>
+		<h3 id="Restful风格最佳实践"><a href="#Restful风格最佳实践" class="headerlink" title="Restful风格最佳实践"></a>Restful风格最佳实践</h3><p><br></p>
+<h4 id="REST来历"><a href="#REST来历" class="headerlink" title="REST来历"></a>REST来历</h4><p><strong>Roy Thomas Fielding</strong>在他2000年的博士论文中提出了<strong>REST</strong>的概念，<strong>Representational State Transfer</strong>这个词，翻译成中文大意为表现层状态传输。由于他是HTTP协议（1.0版和1.1版）的主要设计者、Apache服务器软件的作者之一、Apache基金会的第一任主席，所以REST原则迅速流行起来。当一个软件架构符合REST原则，我们称之为<strong>RESTful架构</strong>。</p>
+<p> <br></p>
+<h4 id="为什么要使用REST？"><a href="#为什么要使用REST？" class="headerlink" title="为什么要使用REST？"></a>为什么要使用REST？</h4><p>众所周知，在桌面时代，网页是前后端融合在一起的，但是随着移动互联网的发展，各种各样类型的client层出不穷，RESTful可以通过一套统一的接口为WEB、IOS、Android提供服务。而且对于一些平台来说，如微信公众号、微博开放平台、Facebook platform等，它们不需要显式的前端，只需要一套提供服务的接口，这样来说RESTful是最好的选择。<br>一张图来表现RESTful： <img src="/2018/12/19/restful风格最佳实践/restful1.png" alt="mage-20180423170415"> </p>
+<p><br></p>
+<h4 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h4><p>在了解REST之前我们先来了解几个概念：</p>
+<p><strong>幂等性</strong>：在HTTP/1.1规范中幂等性的定义是如果方法调用一次和多次产生额外的效果是相同的，它就具有幂等性。例如，在HTTP中使用GET方法通常用于从服务器获取资源，无论调用多少次产生的额外效果都是从服务器获取资源，所以GET具有幂等性；而POST方法通常用于提交数据在服务器上创建一个资源，由于最终创建的结果每次都是不同的，所以POST不具有幂等性；但是PUT方法却是幂等的，因为每次调用产生的效果都是对资源进行更新。</p>
+<p><strong>安全性</strong>：安全方法是指不修改资源的 HTTP 方法。更准确来说是：不改变资源的表示形式。对于安全方法，它仍然可能改变服务器上的内容或资源，但这必须不导致不同的表现形式。</p>
+<p>以下是http常用方法的幂等性和安全性：<br></p>
+<p> <img src="/2018/12/19/restful风格最佳实践/restful2.png" width="400" height="420" alt="mage-20180502134810"><br>在啰嗦了这么多之后终于可以进入主题了，接下来让我们真正地走近REST。 </p>
+<p><br></p>
+<h4 id="什么是REST"><a href="#什么是REST" class="headerlink" title="什么是REST?"></a>什么是REST?</h4><p>REST全称Representational State Transfer，即表现层状态转移，乍看之下不明觉厉，之所以晦涩难懂是因为去掉了主语，应该是Resource Representational State Transfer，通俗来讲就是：资源在网络中以某种表现形式进行状态转移。<br>拆开理解：</p>
+<p><strong>Resource</strong>：资源，即数据（前面说过网络的核心）。比如 newsfeed，friends等；Representational：某种表现形式，比如用JSON，XML，JPEG等；</p>
+<p><strong>State Transfer</strong>：状态变化。通过HTTP动词实现。  </p>
+<p><br></p>
+<h4 id="RESTful-API设计规则"><a href="#RESTful-API设计规则" class="headerlink" title="RESTful API设计规则"></a>RESTful API设计规则</h4><ol>
+<li><p>应将api部署在专用域名下</p>
+</li>
+<li><p>URL区分大小写，/Posts和/posts是两个不同的URL，指向不同的资源</p>
+</li>
+<li><p>使用连接符“-”，而不使用下划线“_”，避免和浏览器中超链接（文字并附带下划线）重合，影响可读性</p>
+</li>
+<li><p>参数列表要encode</p>
+</li>
+<li><p>URL中不应该出现动词，动词应该用HTTP方法表示</p>
+</li>
+<li><p>URL中名字表示资源集合，建议使用复数形式</p>
+</li>
+<li><p>虽然在URL中使用“/”表达层级，但是为了避免层级过深，适当用参数表示，例如：<a href="#">GET /customers/{customerId}/cars?offset=10&amp;limit=5</a>  </p>
+<p><br></p>
+</li>
 </ol>
-<h4 id="Request"><a href="#Request" class="headerlink" title="Request"></a>Request</h4><p>通过标准HTTP方法对资源CRUD<br></p>
+<h4 id="Request"><a href="#Request" class="headerlink" title="Request"></a>Request</h4><p>通过标准HTTP方法对资源CRUD</p>
 <ul>
-<li><strong>GET</strong>：查询资源</li>
-<li><strong>POST</strong>：在服务器新建一个资源</li>
-<li><strong>PUT</strong>：在服务器更新资源</li>
-<li><strong>DELETE</strong>：从服务端删除资源  </li>
+<li><p><strong>GET</strong>：查询资源</p>
+</li>
+<li><p><strong>POST</strong>：在服务器新建一个资源</p>
+</li>
+<li><p><strong>PUT</strong>：在服务器更新资源</p>
+</li>
+<li><p><strong>DELETE</strong>：从服务端删除资源  </p>
+<p><br></p>
+</li>
 </ul>
 <h4 id="Response"><a href="#Response" class="headerlink" title="Response"></a>Response</h4><ul>
-<li>采用<strong>JSON</strong></li>
-<li>默认情况下JSON外层不需要嵌套大括号，API需要支持JSONP跨域访问或者客户端无法访问HTTP header才需要加上嵌套大括号</li>
-<li>默认情况下不要过滤API输出中的空格，并且要支持gzip  </li>
+<li><p>采用<strong>JSON</strong></p>
+</li>
+<li><p>默认情况下JSON外层不需要嵌套大括号，API需要支持JSONP跨域访问或者客户端无法访问HTTP header才需要加上嵌套大括号</p>
+</li>
+<li><p>默认情况下不要过滤API输出中的空格，并且要支持gzip  </p>
+<p><br></p>
+</li>
 </ul>
 <h4 id="API版本控制"><a href="#API版本控制" class="headerlink" title="API版本控制"></a>API版本控制</h4><p>一般采用在URL中存放，例如：POST<a href="http://cupid.dev.dasouche.net/api#!/customer_v4/doPost" target="_blank" rel="noopener">/v4/customers.json</a>  </p>
+<p><br></p>
 <h4 id="过滤信息"><a href="#过滤信息" class="headerlink" title="过滤信息"></a>过滤信息</h4><p>如果记录数量过多，API应该提供参数，过滤请求结果，例如：?page=2&amp;per_page=100  </p>
+<p><br></p>
 <h4 id="HTTP状态码"><a href="#HTTP状态码" class="headerlink" title="HTTP状态码"></a>HTTP状态码</h4><ul>
-<li><strong>200 OK</strong> - 对成功的GET、PUT、PATCH或DELETE操作进行响应。也可以被用在不创建新资源的POST操作上</li>
-<li><strong>201 Created</strong> - 对创建新资源的POST操作进行响应。应该带着指向新资源地址的<a href="https://link.zhihu.com/?target=http%3A//www.w3.org/Protocols/rfc2616/rfc2616-sec14.html%23sec14.30" target="_blank" rel="noopener">Location header</a>)</li>
-<li><strong>204 No Content</strong> - 对不会返回响应体的成功请求进行响应（比如DELETE请求）</li>
-<li><strong>304 Not Modified</strong> - HTTP缓存header生效的时候用</li>
-<li><strong>400 Bad Request</strong> - 请求异常，比如请求中的body无法解析</li>
-<li><strong>401 Unauthorized</strong> - 没有进行认证或者认证非法。当API通过浏览器访问的时候，可以用来弹出一个认证对话框</li>
-<li><strong>403 Forbidden</strong> - 当认证成功，但是认证过的用户没有访问资源的权限</li>
-<li><strong>404 Not Found</strong> - 当一个不存在的资源被请求</li>
-<li><strong>405 Method Not Allowed</strong> - 所请求的HTTP方法不允许当前认证用户访问</li>
-<li><strong>410 Gone</strong> - 表示当前请求的资源不再可用。当调用老版本API的时候很有用</li>
-<li><strong>415 Unsupported Media Type</strong> - 如果请求中的内容类型是错误的</li>
-<li><strong>422 Unprocessable Entity</strong> - 用来表示校验错误</li>
-<li><strong>429 Too Many Requests</strong> - 由于请求频次达到上限而被拒绝访问  </li>
+<li><p><strong>200 OK</strong> - 对成功的GET、PUT、PATCH或DELETE操作进行响应。也可以被用在不创建新资源的POST操作上</p>
+</li>
+<li><p><strong>201 Created</strong> - 对创建新资源的POST操作进行响应。应该带着指向新资源地址的<a href="https://link.zhihu.com/?target=http%3A//www.w3.org/Protocols/rfc2616/rfc2616-sec14.html%23sec14.30" target="_blank" rel="noopener">Location header</a>)</p>
+</li>
+<li><p><strong>204 No Content</strong> - 对不会返回响应体的成功请求进行响应（比如DELETE请求）</p>
+</li>
+<li><p><strong>304 Not Modified</strong> - HTTP缓存header生效的时候用</p>
+</li>
+<li><p><strong>400 Bad Request</strong> - 请求异常，比如请求中的body无法解析</p>
+</li>
+<li><p><strong>401 Unauthorized</strong> - 没有进行认证或者认证非法。当API通过浏览器访问的时候，可以用来弹出一个认证对话框</p>
+</li>
+<li><p><strong>403 Forbidden</strong> - 当认证成功，但是认证过的用户没有访问资源的权限</p>
+</li>
+<li><p><strong>404 Not Found</strong> - 当一个不存在的资源被请求</p>
+</li>
+<li><p><strong>405 Method Not Allowed</strong> - 所请求的HTTP方法不允许当前认证用户访问</p>
+</li>
+<li><p><strong>410 Gone</strong> - 表示当前请求的资源不再可用。当调用老版本API的时候很有用</p>
+</li>
+<li><p><strong>415 Unsupported Media Type</strong> - 如果请求中的内容类型是错误的</p>
+</li>
+<li><p><strong>422 Unprocessable Entity</strong> - 用来表示校验错误</p>
+</li>
+<li><p><strong>429 Too Many Requests</strong> - 由于请求频次达到上限而被拒绝访问  </p>
+<p><br></p>
+</li>
 </ul>
 <h4 id="认证"><a href="#认证" class="headerlink" title="认证"></a>认证</h4><p>RESTful API应该是<strong>无状态</strong>。这意味着对请求的认证不应该基于cookie或者session。相反，每个请求应该带有一些认证凭证。</p>
 <ul>
-<li>使用SSL的情况下，认证凭证可以简单的使用随机生成的access token，把其做为HTTP Basic Auth中user name字段的值传给API。</li>
-<li>如果用户无法从API管理后台获取到token，则使用<strong>OAuth 2</strong>（也是基于SSL）来把安全token传递给第三方</li>
-<li>支持<strong>JSONP</strong>的API可以使用一个额外的查询参数access_token，因为JSONP的请求没法发送HTTP Basic Auth凭证或者Bearer token。  </li>
+<li><p>使用SSL的情况下，认证凭证可以简单的使用随机生成的access token，把其做为HTTP Basic Auth中user name字段的值传给API。</p>
+</li>
+<li><p>如果用户无法从API管理后台获取到token，则使用<strong>OAuth 2</strong>（也是基于SSL）来把安全token传递给第三方</p>
+</li>
+<li><p>支持<strong>JSONP</strong>的API可以使用一个额外的查询参数access_token，因为JSONP的请求没法发送HTTP Basic Auth凭证或者Bearer token。 </p>
+<p><br></p>
+</li>
 </ul>
 <h4 id="传参"><a href="#传参" class="headerlink" title="传参"></a>传参</h4><ol>
-<li>放在url路径中，例如：<a href="#">GET/v1/customers/{customerId}.json</a></li>
-<li>为避免层级过深，适当使用参数表示，例如：<a href="#">GET/v1/customers.json?ids=&amp;uids=&amp;search=&amp;shopCode=&amp;siteId=</a></li>
-<li>以JSON形式放在url路径中，例如：<a href="#">http://localhost:8080/app/names?queryDtoStr={“query1”:12,”query2”:2,”query3”:2}</a></li>
-<li>POST请求将参数以JSON的形式放在body中， 服务端使用<strong>@RequestBody</strong>注解将其解析为对象。  </li>
+<li><p>放在url路径中，例如：<a href="#">GET/v1/customers/{customerId}.json</a></p>
+</li>
+<li><p>为避免层级过深，适当使用参数表示，例如：<a href="#">GET/v1/customers.json?ids=&amp;uids=&amp;search=&amp;shopCode=&amp;siteId=</a></p>
+</li>
+<li><p>以JSON形式放在url路径中，例如：<a href="#">http://localhost:8080/app/names?queryDtoStr={“query1”:12,”query2”:2,”query3”:2}</a></p>
+</li>
+<li><p>POST请求将参数以JSON的形式放在body中， 服务端使用<strong>@RequestBody</strong>注解将其解析为对象。</p>
+<p>  <br></p>
+</li>
 </ol>
-<h4 id="参考文档传送门："><a href="#参考文档传送门：" class="headerlink" title="参考文档传送门："></a>参考文档传送门：<br></h4><ol>
+<h4 id="参考文档传送门："><a href="#参考文档传送门：" class="headerlink" title="参考文档传送门："></a>参考文档传送门：</h4><ol>
 <li><a href="https://zhuanlan.zhihu.com/p/25647039" target="_blank" rel="noopener">《RESTful API最佳实践》</a>—By王东尧</li>
-<li><a href="https://blog.igevin.info/posts/restful-api-get-started-to-write/" target="_blank" rel="noopener">《RESTful编写指南》</a>—By Gevin<br></li>
+<li><a href="https://blog.igevin.info/posts/restful-api-get-started-to-write/" target="_blank" rel="noopener">《RESTful编写指南》</a>—By Gevin</li>
 </ol>
 <p><strong>附Roy Fielding的毕业论文传送门：</strong></p>
 <p>论文地址：<a href="https://link.zhihu.com/?target=http%3A//www.ics.uci.edu/%7Efielding/pubs/dissertation/top.htm" target="_blank" rel="noopener">Architectural Styles and the Design of Network-based Software Architectures</a><br>REST章节：[Fielding Dissertation: CHAPTER 5: Representational State Transfer (REST)](</p>
@@ -187,6 +240,14 @@
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev">
+ <a href="/2018/12/19/java动态代理机制/" title="java动态代理机制">
+  <strong>上一篇：</strong><br>
+  <span>
+  java动态代理机制</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/2018/12/19/使用idea搭建springboot项目/" title="使用idea搭建springboot项目">
@@ -291,7 +352,7 @@
 		
 
 		<p class="copyright">
-		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2019 
 		
 		<a href="/about" target="_blank" title="人工不智能">人工不智能</a>
 		
