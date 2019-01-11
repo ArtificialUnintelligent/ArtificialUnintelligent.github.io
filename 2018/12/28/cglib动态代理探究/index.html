@@ -18,7 +18,7 @@
 <meta property="og:site_name" content="Stay Hungry, Stay Foolish">
 <meta property="og:description" content="参考Spring | Aop核心 | Cglib源码详细解析，代理模式详解比葫芦画瓢，做一些学习笔记 cglib和jdk动态代理相比，有一个明显的优点就是被代理类无需实现接口。cglib使用生成子类的方式来进行代理，被代理类和方法不可被final修饰 先写一个cglib的例子： 1234567891011121314151617181920212223242526/** * @Author: Ar">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-10T12:04:47.051Z">
+<meta property="og:updated_time" content="2019-01-10T12:15:21.212Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="cglib动态代理探究">
 <meta name="twitter:description" content="参考Spring | Aop核心 | Cglib源码详细解析，代理模式详解比葫芦画瓢，做一些学习笔记 cglib和jdk动态代理相比，有一个明显的优点就是被代理类无需实现接口。cglib使用生成子类的方式来进行代理，被代理类和方法不可被final修饰 先写一个cglib的例子： 1234567891011121314151617181920212223242526/** * @Author: Ar">
@@ -145,6 +145,7 @@
 <p><strong>后续</strong></p>
 <p>根据源码，我们可以通过获取strategy对象来打印最终得到的代理对象，代码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">            GeneratorStrategy strategy = enhancer.getStrategy();</span><br><span class="line">            <span class="keyword">byte</span>[] classFile = strategy.generate(enhancer);</span><br><span class="line">            String path = <span class="string">"./OtherWorkerProxy.class"</span>;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                FileOutputStream fos = <span class="keyword">new</span> FileOutputStream(path);</span><br><span class="line">                fos.write(classFile);</span><br><span class="line">                fos.flush();</span><br><span class="line">            &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p>具体的字节码<a href="https://blog.csdn.net/woshilijiuyi/article/details/83448407" target="_blank" rel="noopener">在这里</a>有相关介绍，就不赘述了</p>
 <p><strong>在阅读源码中查阅到的一些有趣的东西：</strong></p>
 <ul>
 <li><a href="https://blog.csdn.net/u011703657/article/details/51848700" target="_blank" rel="noopener">AccessController.doPrivileged传送门</a></li>
