@@ -1,0 +1,586 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+  
+    <title>jvm学习笔记 | Stay Hungry, Stay Foolish</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="人工不智能">
+    
+
+    
+    <meta name="description" content="主要参考资料：谁说深入浅出虚拟机难？现在我让他通俗易懂（JVM） 加深理解需要，复制了原文中的部分图片，侵删 简单地做下jvm的学习笔记 概念  Jvm  java虚拟机（java virtual machine）缩写，java使用jvm屏蔽与平台相关的信息，做到平台无关性。jvm执行字节码时把字节码解释成具体平台上的机器指令执行  JDK  java语言软件开发工具包（java developm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jvm学习笔记">
+<meta property="og:url" content="http://yoursite.com/2019/02/19/jvm学习笔记/index.html">
+<meta property="og:site_name" content="Stay Hungry, Stay Foolish">
+<meta property="og:description" content="主要参考资料：谁说深入浅出虚拟机难？现在我让他通俗易懂（JVM） 加深理解需要，复制了原文中的部分图片，侵删 简单地做下jvm的学习笔记 概念  Jvm  java虚拟机（java virtual machine）缩写，java使用jvm屏蔽与平台相关的信息，做到平台无关性。jvm执行字节码时把字节码解释成具体平台上的机器指令执行  JDK  java语言软件开发工具包（java developm">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2019/02/19/jvm学习笔记/WX20190219-112910@2x.png">
+<meta property="og:image" content="http://yoursite.com/2019/02/19/jvm学习笔记/1523263764424a54638e440.jpeg">
+<meta property="og:image" content="http://yoursite.com/2019/02/19/jvm学习笔记/1523263919119fa8f4f4d7b.jpeg">
+<meta property="og:image" content="http://yoursite.com/2019/02/19/jvm学习笔记/152326523701215e6db640e.jpeg">
+<meta property="og:image" content="http://yoursite.com/2019/02/19/jvm学习笔记/1523264461791a94c2c3f1f.jpeg">
+<meta property="og:image" content="http://yoursite.com/2019/02/19/jvm学习笔记/1523264512925f728c4cb00.jpeg">
+<meta property="og:image" content="http://yoursite.com/2019/02/19/jvm学习笔记/15232645456541e56a915fc.jpeg">
+<meta property="og:updated_time" content="2019-02-19T09:48:14.084Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jvm学习笔记">
+<meta name="twitter:description" content="主要参考资料：谁说深入浅出虚拟机难？现在我让他通俗易懂（JVM） 加深理解需要，复制了原文中的部分图片，侵删 简单地做下jvm的学习笔记 概念  Jvm  java虚拟机（java virtual machine）缩写，java使用jvm屏蔽与平台相关的信息，做到平台无关性。jvm执行字节码时把字节码解释成具体平台上的机器指令执行  JDK  java语言软件开发工具包（java developm">
+<meta name="twitter:image" content="http://yoursite.com/2019/02/19/jvm学习笔记/WX20190219-112910@2x.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Stay Hungry, Stay Foolish" type="application/atom+xml">
+    
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Stay Hungry, Stay Foolish" title="Stay Hungry, Stay Foolish"></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Stay Hungry, Stay Foolish">Stay Hungry, Stay Foolish</a></h1>
+				<h2 class="blog-motto">大智若饥，求知若愚，行走且思考，不做时间的奴隶</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索">
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</ul></nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope="" itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/02/19/jvm学习笔记/" title="jvm学习笔记" itemprop="url">jvm学习笔记</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="人工不智能" target="_blank" itemprop="author">人工不智能</a>
+		
+  </p><p class="article-time">
+    <time datetime="2019-02-19T03:08:52.000Z" itemprop="datePublished"> 发表于 2019-02-19</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.</span> <span class="toc-text">Jvm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.2.</span> <span class="toc-text">JDK</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.3.</span> <span class="toc-text">JRE</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">2.</span> <span class="toc-text">JVM运行时数据区</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">3.</span> <span class="toc-text">JVM内存模型（JMM）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">3.1.</span> <span class="toc-text">JMM中的并发编程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">3.1.1.</span> <span class="toc-text">两个概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">3.1.2.</span> <span class="toc-text">Java内存模型</span></a></li></ol></li></ol></li></ol>
+		
+		</div>
+		
+		<p><strong>主要参考资料：</strong><a href="https://blog.csdn.net/yunzhaji3762/article/details/79872890" target="_blank" rel="noopener">谁说深入浅出虚拟机难？现在我让他通俗易懂（JVM）</a></p>
+<p>加深理解需要，复制了原文中的部分图片，侵删</p>
+<p><strong>简单地做下jvm的学习笔记</strong></p>
+<h2>概念</h2>
+
+<h3>Jvm</h3>
+
+<p>java虚拟机（java virtual machine）缩写，java使用jvm屏蔽与平台相关的信息，做到平台无关性。jvm执行字节码时把字节码解释成具体平台上的机器指令执行</p>
+<p><br></p>
+<h3>JDK</h3>
+
+<p>java语言软件开发工具包（java development kit）（注：软件开发工具包software development kit）</p>
+<p>jdk包含：javac、jar、Javadoc、jdb、java、appletviewer、javah、javap、jconsole</p>
+<p><br></p>
+<h3>JRE</h3>
+
+<p>java运行环境（java runtime environment）运行java所需的环境集合，包括：<strong>java runtime environment</strong>（java平台，不包含jdk）和<strong>java plug-in</strong>（用来跑java小程序）</p>
+<p><br></p>
+<p><br></p>
+<h2>JVM运行时数据区</h2>
+
+<p>基本结构：</p>
+<p><img src="/2019/02/19/jvm学习笔记/WX20190219-112910@2x.png" alt=""></p>
+<p> 运行时结构：</p>
+<p><img src="/2019/02/19/jvm学习笔记/1523263764424a54638e440.jpeg" alt=""></p>
+<p><img src="/2019/02/19/jvm学习笔记/1523263919119fa8f4f4d7b.jpeg" alt=""></p>
+<p>从上图可以看出，程序计数器、java虚拟机栈、本地方法栈为线程私有，生命周期与线程同</p>
+<ol>
+<li><p>程序计数器</p>
+<p>当前线程所执行的字节码行号指示器</p>
+<p>独立存储，cpu多线程机制，为了线程切换后的复位</p>
+<p>记录正在执行的java方法的字节码指令地址，如果执行的是native方法，计数器值为空</p>
+</li>
+<li><p>java虚拟机栈</p>
+<p>描述java方法执行的内存模型，每个方法执行的时候创建栈帧存储局部变量表、操作数栈、动态链接、方法出口等信息，每个方法从被调执行至完成就对应一个栈帧在虚拟机栈中从入栈到出栈的过程</p>
+</li>
+<li><p>本地方法栈</p>
+<p>与虚拟机栈类似，为native方法服务</p>
+</li>
+</ol>
+<p>java堆（Java Heap）与方法区（Method Area）为共有</p>
+<ol>
+<li><p>java堆（GC堆）</p>
+<p>所有线程共享</p>
+<p>虚拟机启动时创建</p>
+<p>存放对象实例（几乎所有对象实例及数组）</p>
+<p>采用分代收集算法（java堆分为新生代和老年代，新生代又有Eden、From survivor、To Survivor）</p>
+<p>可以处于不连续的内存空间，可扩展（通过控制<a href="https://blog.csdn.net/qq_20864311/article/details/81319310" target="_blank" rel="noopener">-Xms和-Xmx</a>）</p>
+</li>
+<li><p>方法区</p>
+<p>所有线程共享</p>
+<p>虚拟机启动时创建</p>
+<p>存放已被虚拟机加载的类信息、常量、静态变量、JIT编译后的代码等</p>
+<p>不需要连续的内存空间，可扩展、可固定大小，可不实现垃圾收集</p>
+<p><strong>运行时常量池</strong>：</p>
+<p>方法区的一部分，存放编译期生成的各种字面量和符号引用，详见<a href="https://www.cnblogs.com/xiaotian15/p/6971353.html" target="_blank" rel="noopener">java虚拟机：运行时常量池</a></p>
+</li>
+</ol>
+<p><strong>直接内存</strong></p>
+<p>不是虚拟机运行时数据区的一部分，也不是jvm规范中定义的内存区域，这部分内存也被频繁使用</p>
+<p><br></p>
+<p><br></p>
+<h2>JVM内存模型（JMM）</h2>
+
+<p><img src="/2019/02/19/jvm学习笔记/152326523701215e6db640e.jpeg" alt=""></p>
+<p>java1.8之后移除了永久带，引入Metaspace（元空间）</p>
+<p>传送门：<a href="https://blog.csdn.net/heatdeath/article/details/80037936" target="_blank" rel="noopener">Java8 对应的 JMM 划分</a></p>
+<h3>JMM中的并发编程</h3>
+
+<h4>两个概念</h4>
+
+<ol>
+<li><p>线程间通信</p>
+<p>线程间可通过共享内存和消息传递两种方式来进行。</p>
+<p>共享内存：线程间通过读写内存中的公共状态来隐式通信，例如通过共享对象进行通信</p>
+<p>消息传递：线程之前没有公共状态，通过发送消息来进行显式通信，例如wait()和notify()</p>
+</li>
+<li><p>线程间同步</p>
+<p>程序用于控制不同线程之间操作发生相对顺序的机制</p>
+<p>共享内存模型：同步显式进行，通过指定某个方法或代码段需要在线程间互斥执行</p>
+<p>消息传递模型：消息的发送在接收之前，因此为隐式进行</p>
+</li>
+</ol>
+<h4>Java内存模型</h4>
+
+<p><strong>概念</strong>：jmm定义线程和主内存之间的抽象关系是线程之间的共享变量存储在主内存中，每个线程都有一个私有的本地内存，本地内存中存储该线程读写共享变量的副本（本地内存是一个抽象概念，不真实存在）</p>
+<p><strong>线程间通信模型：</strong></p>
+<p><img src="/2019/02/19/jvm学习笔记/1523264461791a94c2c3f1f.jpeg" alt=""></p>
+<p><strong>JVM对java内存模型的实现：</strong></p>
+<p><img src="/2019/02/19/jvm学习笔记/1523264512925f728c4cb00.jpeg" alt=""></p>
+<p>线程栈：</p>
+<ol>
+<li>存储当前方法的所有本地变量</li>
+<li>所有原始类型的本地变量</li>
+<li>本地变量是一个对象时存放其引用</li>
+<li>一个对象的成员方法包含的本地变量</li>
+<li>一个对象的成员变量</li>
+</ol>
+<p>堆：</p>
+<ol>
+<li>本地变量是一个对象时存放对象本身</li>
+<li>java应用创建的所有对象信息（不管对象是成员变量还是本地变量）</li>
+<li>static变量以及类本身相关信息</li>
+</ol>
+<p><strong>jvm桥接硬件架构</strong></p>
+<p><img src="/2019/02/19/jvm学习笔记/15232645456541e56a915fc.jpeg" alt=""></p>
+<p>jmm和硬件内存架构是交叉关系，由此产生两个问题</p>
+<ol>
+<li><p>共享对象的可见性：</p>
+<p>多线程操作同一共享对象时，在没有并发控制的情况下，一个线程的共享对象的更新可能导致其他线程看不见</p>
+<p>可以使用volatile，变量直接从主存读取，更新也直接写到主存。基于Memory Barrier实现</p>
+</li>
+<li><p>竞争现象：</p>
+<p>多个线程同时修改同一共享对象</p>
+<p>使用synchronized关键字，保证同一个时刻只能有一个线程进入代码竞争区。</p>
+</li>
+<li><p>volatile和 synchronized区别</p>
+<ul>
+<li><p>volatile本质是在告诉jvm当前变量在寄存器（工作内存）中的值是不确定的，需要从主存中读取； synchronized则是锁定当前变量，只有当前线程可以访问该变量，其他线程被阻塞住。</p>
+</li>
+<li><p>volatile仅能使用在变量级别；synchronized则可以使用在变量、方法、和类级别的</p>
+</li>
+<li><p>volatile仅能实现变量的修改可见性，不能保证原子性；而synchronized则可以保证变量的修改可见性和原子性</p>
+</li>
+<li><p>volatile不会造成线程的阻塞；synchronized可能会造成线程的阻塞。</p>
+</li>
+<li><p>volatile标记的变量不会被编译器优化；synchronized标记的变量可以被编译器优化</p>
+</li>
+</ul>
+</li>
+</ol>
+<p><strong>支撑jmm的基础原理</strong></p>
+<ol>
+<li>指令重排序：编译器在不改变单线程程序语义的前提下重新安排语句的执行顺序；如果不存在数据依赖性，处理器可以改变语句对应机器指令的执行顺序</li>
+<li>内存屏障（memory barrier）：禁止特定类型的处理器重排序</li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2019/02/19/jvm学习笔记/" data-title="jvm学习笔记 | Stay Hungry, Stay Foolish" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2019/02/14/Redis学习笔记/" title="Redis学习笔记">
+ <strong>下一篇：</strong><br> 
+ <span>Redis学习笔记
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.</span> <span class="toc-text">Jvm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.2.</span> <span class="toc-text">JDK</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.3.</span> <span class="toc-text">JRE</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">2.</span> <span class="toc-text">JVM运行时数据区</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">3.</span> <span class="toc-text">JVM内存模型（JMM）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">3.1.</span> <span class="toc-text">JMM中的并发编程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">3.1.1.</span> <span class="toc-text">两个概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">3.1.2.</span> <span class="toc-text">Java内存模型</span></a></li></ol></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="ArtificialUnintelligent" data-theme="medium"></div>
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
+</div>
+
+
+
+  
+
+  
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://www1350.github.io/hexo/bookmarks/" target="_blank" title="Absurd博客">Absurd博客</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://longlongagocsu.github.io/" target="_blank" title="红鲤鱼与绿鲤鱼">红鲤鱼与绿鲤鱼</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self" frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=&verifier=&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer">
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> 人工不智能的后备仓库 <br>
+			你想要的，都不在这里</p>
+	</section>
+	 
+	<div class="social-font">
+		
+		<a href="http://weibo.com/5594358538" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/ArtificialUnintelligent" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2019 
+		
+		<a href="/about" target="_blank" title="人工不智能">人工不智能</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
