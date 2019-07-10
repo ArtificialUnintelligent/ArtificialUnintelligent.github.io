@@ -18,7 +18,7 @@
 <meta property="og:site_name" content="Stay Hungry, Stay Foolish">
 <meta property="og:description" content="本文为学习笔记，配合线程池相关文章学习一下内部源码， 参考资料传送门： 深入学习 FutureTask 面试官常问的线程池，你真的了解吗？ 并发编程之 源码剖析 线程池 实现原理  demo： 12345678910111213141516171819202122232425262728293031323334public class ThreadPoolDemo &amp;#123;    public">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-04-18T08:09:35.925Z">
+<meta property="og:updated_time" content="2019-04-18T09:19:31.395Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="线程池实现原理">
 <meta name="twitter:description" content="本文为学习笔记，配合线程池相关文章学习一下内部源码， 参考资料传送门： 深入学习 FutureTask 面试官常问的线程池，你真的了解吗？ 并发编程之 源码剖析 线程池 实现原理  demo： 12345678910111213141516171819202122232425262728293031323334public class ThreadPoolDemo &amp;#123;    public">
@@ -148,6 +148,17 @@
 <p>可以看到该方法有一个死循环，直到有确定状态返回。如果上述条件都不符合，则线程进入阻塞状态。什么时候被唤醒呢，看下finishCompletion方法：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">finishCompletion</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// assert state &gt; COMPLETING;</span></span><br><span class="line">        <span class="keyword">for</span> (WaitNode q; (q = waiters) != <span class="keyword">null</span>;) &#123;</span><br><span class="line">            <span class="keyword">if</span> (UNSAFE.compareAndSwapObject(<span class="keyword">this</span>, waitersOffset, q, <span class="keyword">null</span>)) &#123;</span><br><span class="line">                <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">                    Thread t = q.thread;</span><br><span class="line">                    <span class="keyword">if</span> (t != <span class="keyword">null</span>) &#123;</span><br><span class="line">                        q.thread = <span class="keyword">null</span>;</span><br><span class="line">                        LockSupport.unpark(t);</span><br><span class="line">                    &#125;</span><br><span class="line">                    WaitNode next = q.next;</span><br><span class="line">                    <span class="keyword">if</span> (next == <span class="keyword">null</span>)</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    q.next = <span class="keyword">null</span>; <span class="comment">// unlink to help gc</span></span><br><span class="line">                    q = next;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        done();</span><br><span class="line"></span><br><span class="line">        callable = <span class="keyword">null</span>;        <span class="comment">// to reduce footprint</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p>该方法依次遍历waiters链表，唤醒节点中的线程，然后把callable置空，被唤醒的线程会各自从awaitDone方法中的LockSupport.park阻塞中返回，然后执行新的一轮循环，返回执行结果（任务状态）</p>
+<p>最后附上FutureTask中定义的任务状态：</p>
+<ul>
+<li>NEW:表示是个新的任务或者还没被执行完的任务。这是初始状态。</li>
+<li>COMPLETING:任务已经执行完成或者执行任务的时候发生异常，但是任务执行结果或者异常原因还没有保存到outcome字段(outcome字段用来保存任务执行结果，如果发生异常，则用来保存异常原因)的时候，状态会从NEW变更到COMPLETING。但是这个状态会时间会比较短，属于中间状态。</li>
+<li>NORMAL:任务已经执行完成并且任务执行结果已经保存到outcome字段，状态会从COMPLETING转换到NORMAL。这是一个最终态。</li>
+<li>EXCEPTIONAL:任务执行发生异常并且异常原因已经保存到outcome字段中后，状态会从COMPLETING转换到EXCEPTIONAL。这是一个最终态。</li>
+<li>CANCELLED:任务还没开始执行或者已经开始执行但是还没有执行完成的时候，用户调用了cancel(false)方法取消任务且不中断任务执行线程，这个时候状态会从NEW转化为CANCELLED状态。这是一个最终态。</li>
+<li>INTERRUPTING: 任务还没开始执行或者已经执行但是还没有执行完成的时候，用户调用了cancel(true)方法取消任务并且要中断任务执行线程但是还没有中断任务执行线程之前，状态会从NEW转化为INTERRUPTING。这是一个中间状态。</li>
+<li>INTERRUPTED:调用interrupt()中断任务执行线程之后状态会从INTERRUPTING转换到INTERRUPTED。这是一个最终态。</li>
+</ul>
+<p>所有值大于COMPLETING的状态都表示任务已经执行完成(任务正常执行完成，任务执行异常或者任务被取消)。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -173,6 +184,14 @@
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev">
+ <a href="/2019/04/18/队列同步器/" title="队列同步器">
+  <strong>上一篇：</strong><br>
+  <span>
+  队列同步器</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/2019/04/01/java并发-双重检查锁/" title="java并发-双重检查锁">

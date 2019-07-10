@@ -4,23 +4,24 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="UTF-8">
   
-    <title>Stay Hungry, Stay Foolish</title>
+    <title>dubbo学习之filter | Stay Hungry, Stay Foolish</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="人工不智能">
     
 
     
-    <meta name="description" content="一个弱鸡码农的成长之路">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Stay Hungry, Stay Foolish">
-<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+    <meta name="description" content="参考文档传送门：Dubbo Filter详解 在调用dubbo的时候，经常需要捕获运行时异常，抛出业务异常，为此在rpc层要写很多的try-catch，因此想是否能通过dubbo提供的filter机制做一个异常捕获，一次性处理掉这些异常情况 为此需要简单看下filter实现">
+<meta property="og:type" content="article">
+<meta property="og:title" content="dubbo学习之filter">
+<meta property="og:url" content="http://yoursite.com/2019/05/20/dubbo学习之filter/index.html">
 <meta property="og:site_name" content="Stay Hungry, Stay Foolish">
-<meta property="og:description" content="一个弱鸡码农的成长之路">
+<meta property="og:description" content="参考文档传送门：Dubbo Filter详解 在调用dubbo的时候，经常需要捕获运行时异常，抛出业务异常，为此在rpc层要写很多的try-catch，因此想是否能通过dubbo提供的filter机制做一个异常捕获，一次性处理掉这些异常情况 为此需要简单看下filter实现">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-20T14:30:19.435Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Stay Hungry, Stay Foolish">
-<meta name="twitter:description" content="一个弱鸡码农的成长之路">
+<meta name="twitter:title" content="dubbo学习之filter">
+<meta name="twitter:description" content="参考文档传送门：Dubbo Filter详解 在调用dubbo的时候，经常需要捕获运行时异常，抛出业务异常，为此在rpc层要写很多的try-catch，因此想是否能通过dubbo提供的filter机制做一个异常捕获，一次性处理掉这些异常情况 为此需要简单看下filter实现">
 
     
     <link rel="alternative" href="/atom.xml" title="Stay Hungry, Stay Foolish" type="application/atom+xml">
@@ -70,198 +71,84 @@
 </div>
     </header>
     <div id="container">
-      <div id="main">
-
+      <div id="main" class="post" itemscope="" itemprop="blogPost">
   
-<section class="post" itemscope="" itemprop="blogitem">
-  
-    <a href="/2018/12/28/cglib动态代理探究/" title="cglib动态代理探究" itemprop="url">
-  
-    <h1 itemprop="name">cglib动态代理探究</h1>
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
     
-     
-           <p itemprop="description">参考Spring | Aop核心 | Cglib源码详细解析，代理模式详解比葫芦画瓢，做一些学习笔记
-cglib和jdk动态代理相比，有一个明显的优点就是被代理类无需实现接口。cglib使用生成子类的方式来进行代理，被代理类和方法不可被final修饰
-先写一个cglib的例子：
-</p>
-        
+      <a href="/2019/05/20/dubbo学习之filter/" title="dubbo学习之filter" itemprop="url">dubbo学习之filter</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="人工不智能" target="_blank" itemprop="author">人工不智能</a>
+		
+  </p><p class="article-time">
+    <time datetime="2019-05-20T14:25:19.000Z" itemprop="datePublished"> 发表于 2019-05-20</time>
     
-    <time datetime="2018-12-28T06:26:44.000Z" itemprop="datePublished">2018-12-28</time>
-  </a>
-</section>
-
-
-
-
-
-
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			
+		
+		</div>
+		
+		<p>参考文档传送门：<a href="https://www.jianshu.com/p/c5ebe3e08161" target="_blank" rel="noopener">Dubbo Filter详解</a></p>
+<p>在调用dubbo的时候，经常需要捕获运行时异常，抛出业务异常，为此在rpc层要写很多的try-catch，因此想是否能通过dubbo提供的filter机制做一个异常捕获，一次性处理掉这些异常情况</p>
+<p>为此需要简单看下filter实现</p>
   
-<section class="post" itemscope="" itemprop="blogitem">
-  
-    <a href="/2018/12/25/jdk动态代理探究/" title="jdk动态代理探究" itemprop="url">
-  
-    <h1 itemprop="name">jdk动态代理探究</h1>
-    
-     
-           <p itemprop="description">主要探究下newProxyInstance方法中传入业务方法实现的接口的作用
-首先写了Worker类和实现：
-123456789/** * @Author: ArtificialUnintelligent * @Description: */public interface Wo</p>
-        
-    
-    <time datetime="2018-12-25T09:12:55.000Z" itemprop="datePublished">2018-12-25</time>
-  </a>
-</section>
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
 
-
-
-
-
-
-  
-<section class="post" itemscope="" itemprop="blogitem">
-  
-    <a href="/2018/12/22/收藏/" title="收藏" itemprop="url">
-  
-    <h1 itemprop="name">收藏</h1>
-    
-     
-           <p itemprop="description">做一些资料的收集
-mybatis相关idea导入mybatis源码
-mybatis 3.x源码深度解析与最佳实践
-
-Hexohexo常用命令笔记
-
-Java动态代理在spring中获取代理对象代理的目标对象工具类
-Java动态代理机制原理详解（JDK 和CGLIB，Javassi</p>
-        
-    
-    <time datetime="2018-12-22T09:59:47.000Z" itemprop="datePublished">2018-12-22</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope="" itemprop="blogitem">
-  
-    <a href="/2018/12/22/mybatis源码浅析/" title="mybatis源码浅析" itemprop="url">
-  
-    <h1 itemprop="name">mybatis源码浅析</h1>
-    
-     
-           <p itemprop="description"></p>
-        
-    
-    <time datetime="2018-12-22T09:59:37.000Z" itemprop="datePublished">2018-12-22</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope="" itemprop="blogitem">
-  
-    <a href="/2018/12/19/java动态代理机制/" title="java动态代理机制" itemprop="url">
-  
-    <h1 itemprop="name">java动态代理机制</h1>
-    
-     
-           <p itemprop="description">关于设计模式-代理模式：先上一段百科中查到的代理模式的定义：为其他对象提供一种代理以控制对这个对象的访问。在某些情况下，一个对象不适合或者不能直接引用另一个对象，而代理对象可以在客户端和目标对象之间起到中介的作用。
-也就是说我们通过代理对象来访问实际对象，代理模式就是在访问实际对</p>
-        
-    
-    <time datetime="2018-12-19T15:08:34.000Z" itemprop="datePublished">2018-12-19</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope="" itemprop="blogitem">
-  
-    <a href="/2018/12/19/restful风格最佳实践/" title="restful风格最佳实践" itemprop="url">
-  
-    <h1 itemprop="name">restful风格最佳实践</h1>
-    
-     
-           <p itemprop="description">Restful风格最佳实践
-REST来历Roy Thomas Fielding在他2000年的博士论文中提出了REST的概念，Representational State Transfer这个词，翻译成中文大意为表现层状态传输。由于他是HTTP协议（1.0版和1.1版）的主要设计</p>
-        
-    
-    <time datetime="2018-12-19T14:29:43.000Z" itemprop="datePublished">2018-12-19</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope="" itemprop="blogitem">
-  
-    <a href="/2018/12/19/使用idea搭建springboot项目/" title="使用idea搭建springboot项目" itemprop="url">
-  
-    <h1 itemprop="name">使用idea搭建springboot项目</h1>
-    
-     
-           <p itemprop="description">springboot是Pivotal团队提供的全新框架，其设计目的是为了简化Spring应用的初始搭建以及开发过程。框架使用了特定方式来进行配置，从而使开发人员不再需要定义样板化的配置。
-创建流程：
-新建项目
-
-
-
-选择spring initializr，点击next
-
-
-填写详</p>
-        
-    
-    <time datetime="2018-12-19T13:40:47.000Z" itemprop="datePublished">2018-12-19</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope="" itemprop="blogitem">
-  
-    <a href="/2018/12/16/markdown基本语法/" title="Markdown基本语法" itemprop="url">
-  
-    <h1 itemprop="name">Markdown基本语法</h1>
-    
-     
-           <p itemprop="description">使用百度百科上的解释，Markdown就是一种可以使用普通文本编辑器编写的标记语言，通过简单的标记语法，它可以使普通文本内容具有一定的格式。Markdown的语法简洁明了、学习容易，而且功能比纯文本更强，因此有很多人用它写博客。具体其他优缺点随便一搜遍地都是，就不再一一列举了，在</p>
-        
-    
-    <time datetime="2018-12-16T03:35:35.115Z" itemprop="datePublished">2018-12-16</time>
-  </a>
-</section>
-
-
-
-
-
-
-
-  <nav id="page-nav" class="clearfix unexpand">
-    <a class="extend prev" rel="prev" href="/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-  </nav>
 
 </div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2019/05/20/dubbo学习之filter/" data-title="dubbo学习之filter | Stay Hungry, Stay Foolish" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2019/04/18/队列同步器/" title="队列同步器">
+ <strong>下一篇：</strong><br> 
+ <span>队列同步器
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ 
+ 
+  </div>
 
 <div id="asidepart">
 <div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
@@ -400,12 +287,89 @@ $(document).ready(function(){
       m.removeClass('moveMain');
       a.css('display', 'block').removeClass('fadeOut');
       o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
         
     }
   });
 });
 </script>
 
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
 
 
 
@@ -478,4 +442,4 @@ var _hmt = _hmt || [];
 <!-- Tiny_search End -->
 
   </body>
- </html>
+</html>
